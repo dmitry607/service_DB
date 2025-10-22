@@ -26,7 +26,6 @@ CREATE TABLE clients(
     email varchar(100) UNIQUE,
     phone varchar(15) UNIQUE,
     date_of_admission timestamp DEFAULT CURRENT_TIMESTAMP,
-    -- Добавляем ограничения
     discount INTEGER CHECK (discount >= 0 AND discount <= 50) DEFAULT 0,
     client_status VARCHAR(20) DEFAULT 'active' CHECK (client_status IN ('active', 'inactive', 'vip'))
 );
@@ -284,4 +283,5 @@ $$ LANGUAGE plpgsql;
 CREATE TRIGGER trigger_update_parts_stock
     AFTER INSERT OR UPDATE OR DELETE ON order_parts
     FOR EACH ROW
+
     EXECUTE FUNCTION update_parts_stock();
